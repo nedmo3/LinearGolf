@@ -1565,7 +1565,7 @@ public class LinearGolf implements LineListener
         System.out.println("--------------------------+----+");
         System.out.println("U      ::.. WWW ...:::SS  |  O |");
         System.out.println("--------------------------+----+");*/
-        dispImage("hole14", "" + holeLength + " to hole, downhill 187-240, Water 242-299, uphill 301-436. Sand 437-"+waterPos);
+        dispImage("hole18", "" + holeLength + " to hole, downhill 187-240, Water 242-299, uphill 301-436. Sand 437-"+waterPos);
         System.out.println();  par = 5;
         beforeHole();
         while (totalDist == 0) {
