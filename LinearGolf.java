@@ -1,9 +1,11 @@
 /**
  * Linear Golf 2.0 beta
- * VR compatible (very)
+ * 
  *
  * @authors Nathan Edmondson, Logan Schoffstall
- * @version 11/26/2020
+ * some code for playing music and playing blackjack were with the help
+ * of online users of Stack Overflow
+ * @version 12/11/2020
  */
 
 import java.awt.*;
@@ -29,7 +31,7 @@ import javax.swing.JLabel;
 public class LinearGolf implements LineListener
 {
     
-        //nonsense
+        
         static int hit = 0; static int clubDist = 0;
         static double pow = 0; static boolean club = false;
         static boolean play = true; static int error = 0;
@@ -56,9 +58,9 @@ public class LinearGolf implements LineListener
         
         //Betting
         private static Scanner scanner = new Scanner(System.in);
-        private static int[] deck;   // An array of 52 Cards, representing the deck.
-        private static int currentPosition; // Current position in the deck
-        private static Vector hand;   // The cards in the hand.
+        private static int[] deck;   
+        private static int currentPosition; 
+        private static Vector hand; 
         
         //Clothing
         static boolean hasGlove = false; static boolean hasHat = false;
@@ -195,7 +197,7 @@ public class LinearGolf implements LineListener
         else if (wind<0)
            windDir = "against";
         else {
-        } //nowind 
+        } // add a no wind option 
         
            
         
@@ -262,10 +264,10 @@ public class LinearGolf implements LineListener
     {
         Scanner in = new Scanner(System.in);        
         int hit = 0; int clubDist = 0;
-        double pow = -1; String hitS = "Biden2020";
+        double pow = -1; String hitS = "";
                   
         System.out.println("Select Your Club");
-        //System.out.println("[D] Driver ~ " + distDr + " yds");
+        //System.out.println("[D] Driver ~ " + distDr + " yds"); no longer available on the fairway
         if (hasHy)
           System.out.println("[H] Hybrid ~ " + distHy + " yds");
         if (hasOne) 
@@ -406,8 +408,10 @@ public class LinearGolf implements LineListener
         inHole = false;
         
         int puttDist = (int)(18 - 8*(playPutt/10.0));
+        if (puttDist == 13)
+           puttDist = 12;
         if (puttDist == 11)
-           puttDist = 10;
+           puttDist = 10; //no one wants to do percentages on 11 and 13
         
         System.out.println();
         System.out.println(" || You are on the green || ");       
@@ -479,7 +483,7 @@ public class LinearGolf implements LineListener
           }
           else if (ask.equalsIgnoreCase("t")) {
             System.out.println("Landing within 10 yards of the hole starts putting."); 
-            System.out.println("Wind is constant for every hole then changes.");
+            System.out.println("Wind is constant for during each hole, then changes for the next.");
             System.out.println("Club distance represents a 100% shot.");
             System.out.println("It's more likely to under hit than over hit.");
             System.out.println("Press S to begin, D for difficulty, or E to leave");
@@ -524,7 +528,7 @@ public class LinearGolf implements LineListener
           }
           else if (ask.equalsIgnoreCase("c")) {
               String save;
-              System.out.println("Enter your name (or fileName)");
+              System.out.println("Enter your name (name you saved last time)");
               name = in.next();
               readSave();              
               userStats();             
@@ -547,7 +551,7 @@ public class LinearGolf implements LineListener
         System.out.println();
         /*System.out.println("Hole 1: Par 3");
         System.out.println("---------------+----+");
-        System.out.println("U              |  O |");
+        System.out.println("U              |  O |");    Old image, now displays a jpg
         System.out.println("---------------+----+");
         System.out.println(" " + holeLength + " to hole"); */
         dispImage("hole1", ""+holeLength+" to hole");
@@ -2043,7 +2047,7 @@ public class LinearGolf implements LineListener
             playAcc--;
             luck--;
             System.out.println(" You've developed blisters on your hand. You are unable");
-            System.out.println(" to firmly grasp the club. You accuracy suffers.");
+            System.out.println(" to firmly grasp the club. Your accuracy suffers.");
             System.out.println("Current accuracy: " +playAcc);
             System.out.println(">>>");
             }
@@ -2727,10 +2731,10 @@ public static void difficultTournament() {
     {
         
 
-        int bet;            // Amount user bets on a game.
-        boolean userWins;   // Did the user win the game?
+        int bet;     
+        boolean userWins;  
 
-        System.out.println("Welcome to the game of blackjack.");
+        System.out.println("Welcome to blackjack.");
         System.out.println();
 
 
@@ -2774,15 +2778,14 @@ public static void difficultTournament() {
 
     private static boolean playBlackjack()
     {
-        // Let the user play one game of Blackjack.
-        // Return true if the user wins, false if the user loses.
+       
 
-        Vector dealerHand;   // The dealer's hand.
-        Vector userHand;     // The user's hand.
+        Vector dealerHand;  
+        Vector userHand; 
 
         // Create an unshuffled deck of cards.
         deck = new int[52];
-        int cardCt = 0; // How many cards have been created so far.
+        int cardCt = 0;
         for (int suit = 0; suit <= 3; suit++)
         {
             for (int value = 1; value <= 13; value++)
@@ -2796,7 +2799,7 @@ public static void difficultTournament() {
         dealerHand = new Vector();
         userHand = new Vector();
 
-        /*  Shuffle the deck, then deal two cards to each player. */
+       
 
         shuffle();
 
@@ -2807,11 +2810,8 @@ public static void difficultTournament() {
 
         System.out.println();
         System.out.println();
-
-        /* Check if one of the players has Blackjack (two cards totaling to 21).
-        The player with Blackjack wins the game.  Dealer wins ties.
-         */
-
+        
+        
         if (value(dealerHand) == 21)
         {
             System.out.println("Dealer has the " + showCard(getCard(dealerHand, 0)) + " and the " + showCard(getCard(dealerHand, 1)) + ".");
@@ -2830,15 +2830,11 @@ public static void difficultTournament() {
             return true;
         }
 
-        /*  If neither player has Blackjack, play the game.  The user gets a chance
-        to draw cards (i.e., to "Hit").  The while loop ends when the user
-        chooses to "Stand" or when the user goes over 21.
-         */
 
         while (true)
         {
 
-            /* Display user's cards, and let user decide to Hit or Stand. */
+          
 
             System.out.println();
             System.out.println();
@@ -2862,17 +2858,13 @@ public static void difficultTournament() {
                 }
             } while (userAction != 'H' && userAction != 'S');
 
-            /* If the user Hits, the user gets a card.  If the user Stands, the
-            dealer gets a chance to draw and the game ends.
-             */
-
             if (userAction == 'S')
             {
-                // Loop ends; user is done taking cards.
+              
                 break;
             } else
-            {  // userAction is 'H'.
-                // Give the user a card.  If the user goes over 21, the user loses.
+            {  
+                
                 int newCard = dealCard();
                 userHand.addElement(newCard);
                 System.out.println();
@@ -2888,11 +2880,8 @@ public static void difficultTournament() {
                 }
             }
 
-        } // end while loop
+        } 
 
-        /* If we get to this point, the user has Stood with 21 or less.  Now, it's
-        the dealer's chance to draw.  Dealer draws cards until the dealer's total is > 16.
-         */
 
         System.out.println();
         System.out.println("User stands.");
@@ -2907,8 +2896,7 @@ public static void difficultTournament() {
         }
         System.out.println("Dealer's total is " + value(dealerHand));
 
-        /* Now, the winner can be declared. */
-
+  
         System.out.println();
         if (value(dealerHand) > 21)
         {
@@ -2934,11 +2922,11 @@ public static void difficultTournament() {
             }
         }
 
-    }  // end playBlackjack()
+    } 
 
     public static int dealCard()
     {
-        // Deals one card from the deck and returns it.
+       
         if (currentPosition == 52)
         {
             shuffle();
@@ -2949,8 +2937,7 @@ public static void difficultTournament() {
 
     public static void shuffle()
     {
-        // Put all the used cards back into the deck, and shuffle it into
-        // a random order.
+       
         for (int i = 51; i > 0; i--)
         {
             int rand = (int) (Math.random() * (i + 1));
@@ -2963,10 +2950,7 @@ public static void difficultTournament() {
 
     public static int getCard(Vector hand, int position)
     {
-        // Get the card from the hand in given position, where positions
-        // are numbered starting from 0.  If the specified position is
-        // not the position number of a card in the hand, then null
-        // is returned.
+       
         if (position >= 0 && position < hand.size())
         {
             return ((Integer)hand.elementAt(position)).intValue();
@@ -2978,13 +2962,10 @@ public static void difficultTournament() {
 
     public static int value(Vector hand)
     {
-        // Returns the value of this hand for the
-        // game of Blackjack.
-
-        int val;      // The value computed for the hand.
-        boolean ace;  // This will be set to true if the
-        //   hand contains an ace.
-        int cards;    // Number of cards in the hand.
+        
+        int val;      
+        boolean ace; 
+        int cards;   
 
         val = 0;
         ace = false;
@@ -2992,26 +2973,23 @@ public static void difficultTournament() {
 
         for (int i = 0; i < cards; i++)
         {
-            // Add the value of the i-th card in the hand.
-            int card;    // The i-th card;
-            int cardVal;  // The blackjack value of the i-th card.
+            
+            int card;  
+            int cardVal;  
             card = getCard(hand, i);
-            cardVal = getCardValue(card);  // The normal value, 1 to 13.
+            cardVal = getCardValue(card); 
             if (cardVal > 10)
             {
-                cardVal = 10;   // For a Jack, Queen, or King.
+                cardVal = 10;  
             }
             if (cardVal == 1)
             {
-                ace = true;     // There is at least one ace.
+                ace = true;    
             }
             val = val + cardVal;
         }
 
-        // Now, val is the value of the hand, counting any ace as 1.
-        // If there is an ace, and if changing its value from 1 to
-        // 11 would leave the score less than or equal to 21,
-        // then do so by adding the extra 10 points to val.
+        
 
         if (ace == true && val + 10 <= 21)
         {
